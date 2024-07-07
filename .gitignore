@@ -20,3 +20,10 @@
 # Go workspace file
 go.work
 go.work.sum
+
+# Host workspace repos
+projects/*
+
+# Do not ignore the folder itself
+!projects/
+!projects/.gitignore

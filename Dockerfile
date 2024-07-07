@@ -39,5 +39,5 @@ COPY . /workspace
 # Expose any necessary ports (optional)
 EXPOSE 8080
 
-# Start a persistent tmux session
-CMD ["tmux", "new-session", "-s", "dev", "-d", "zsh"] && ["tmux", "attach-session", "-t", "dev"]
+# Use tail to keep the container alive
+ENTRYPOINT ["tail", "-f", "/dev/null"]
