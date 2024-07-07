@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  dev:
+    image: dev:latest
+    container_name: dev
+    build:
+      context: .
+    volumes:
+      - .:/workspace
+      - ~/docker_ssh_keys:/root/.ssh
+    ports:
+      - "8080:8080"
+    entrypoint: ["zsh", "-c", "tail -f /dev/null"]
+
