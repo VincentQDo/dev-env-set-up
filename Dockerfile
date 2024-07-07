@@ -20,7 +20,7 @@ RUN apt-get update && \
     cargo \
     nodejs \
     npm \
-    openjdk-11-jdk \
+    openjdk-17-jdk \
     kafkacat \
     && apt-get clean
 
