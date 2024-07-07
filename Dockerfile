@@ -39,5 +39,5 @@ COPY . /workspace
 # Expose any necessary ports (optional)
 EXPOSE 8080
 
-# Set tmux as the default command
-CMD ["tmux"]
+# Start a persistent tmux session
+CMD ["tmux", "new-session", "-s", "dev", "-d", "zsh"] && ["tmux", "attach-session", "-t", "dev"]
