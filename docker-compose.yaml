@@ -7,7 +7,7 @@ services:
     build:
       context: .
     volumes:
-      - .:/workspace
+      - ./projects:/workspace
       - ~/docker_ssh_keys:/root/.ssh
     ports:
       - "8080:8080"
