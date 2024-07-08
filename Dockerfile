@@ -24,6 +24,15 @@ RUN apt-get update && \
     kafkacat \
     && apt-get clean
 
+# Copy the Nerd Font archive to the container
+COPY 0xProto.tar.xz /tmp/0xProto.tar.xz
+
+# Extract the Nerd Font and install it
+RUN mkdir -p ~/.local/share/fonts && \
+    tar -xJf /tmp/0xProto.tar.xz -C ~/.local/share/fonts && \
+    fc-cache -fv && \
+    rm /tmp/0xProto.tar.xz
+
 # Install oh-my-zsh for easier zsh configuration
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
@@ -32,9 +41,6 @@ RUN echo "set-option -g default-shell /usr/bin/zsh" > /root/.tmux.conf
 
 # Set the working directory
 WORKDIR /workspace
-
-# Copy the current directory contents into the container at /workspace
-COPY . /workspace
 
 # Expose any necessary ports (optional)
 EXPOSE 8080
