@@ -1,4 +1,4 @@
-FROM debian:bookworm-20240701
+FROM ubuntu:24.10
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -22,6 +22,7 @@ RUN apt-get update && \
     npm \
     openjdk-17-jdk \
     kafkacat \
+    unzip \
     && apt-get clean
 
 # Copy the Nerd Font archive to the container
@@ -38,6 +39,12 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 
 # Configure tmux to use zsh
 RUN echo "set-option -g default-shell /usr/bin/zsh" > /root/.tmux.conf
+
+# Install Neovim KickStart
+RUN git clone https://github.com/VincentQDo/kickstart.nvim "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+
+# Start neovim and let lazy vim install all plugins
+RUN nvim --headless +qall
 
 # Set the working directory
 WORKDIR /workspace
