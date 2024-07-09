@@ -2,6 +2,9 @@ FROM ubuntu:24.10
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
+ENV LANG=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
 
 # Update the package list and install necessary development tools
 RUN apt-get update && \
@@ -23,6 +26,8 @@ RUN apt-get update && \
     openjdk-17-jdk \
     kafkacat \
     unzip \
+    ripgrep \
+    luarocks \
     && apt-get clean
 
 # Copy the Nerd Font archive to the container
@@ -37,8 +42,11 @@ RUN mkdir -p ~/.local/share/fonts && \
 # Install oh-my-zsh for easier zsh configuration
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
-# Configure tmux to use zsh
-RUN echo "set-option -g default-shell /usr/bin/zsh" > /root/.tmux.conf
+# Configure tmux
+RUN echo "set-option -g default-shell /usr/bin/zsh" >> /root/.tmux.conf && \
+    echo "set-option -sg escape-time 10" >> /root/.tmux.conf && \
+    echo "set-option -g focus-events on" >> /root/.tmux.conf && \
+    echo "set-option -sa terminal-features ',xterm:RGB'" >> /root/.tmux.conf
 
 # Install Neovim KickStart
 RUN git clone https://github.com/VincentQDo/kickstart.nvim "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
