@@ -34,8 +34,8 @@ RUN apt-get update && \
 COPY 0xProto.tar.xz /tmp/0xProto.tar.xz
 
 # Extract the Nerd Font and install it
-RUN mkdir -p ~/.local/share/fonts && \
-    tar -xJf /tmp/0xProto.tar.xz -C ~/.local/share/fonts && \
+RUN mkdir -p /usr/local/share/fonts && \
+    tar -xJf /tmp/0xProto.tar.xz -C /usr/local/share/fonts && \
     fc-cache -fv && \
     rm /tmp/0xProto.tar.xz
 
@@ -49,11 +49,17 @@ RUN echo "set-option -g default-shell /usr/bin/zsh" >> /root/.tmux.conf && \
     echo "set-option -sa terminal-features ',xterm:RGB'" >> /root/.tmux.conf
 
 # Install Neovim KickStart
-RUN git clone https://github.com/VincentQDo/kickstart.nvim "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+RUN git clone https://github.com/VincentQDo/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
+
+# Ensure locale is generated and set correctly
+RUN apt-get install -y locales && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8
 
 # Start neovim and let lazy vim install all plugins
-RUN nvim --headless +qall
-RUN nvim --headless +"MasonInstall prettier pyright typescript-language-server lua-language-server stylua" +qall
+RUN nvim --headless +qall && \
+    nvim --headless +"MasonInstall prettier pyright typescript-language-server lua-language-server stylua" +qall
+
 # Set the working directory
 WORKDIR /workspace
 
