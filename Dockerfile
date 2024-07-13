@@ -53,7 +53,7 @@ RUN git clone https://github.com/VincentQDo/kickstart.nvim "${XDG_CONFIG_HOME:-$
 
 # Start neovim and let lazy vim install all plugins
 RUN nvim --headless +qall
-
+RUN nvim --headless +"MasonInstall prettier pyright typescript-language-server lua-language-server stylua" +qall
 # Set the working directory
 WORKDIR /workspace
 
