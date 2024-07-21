@@ -7,6 +7,7 @@ services:
     volumes:
       - dev_volume:/workspace
       - ~/docker_ssh_keys:/root/.ssh
+      - .:/workspace/image-setup
     ports:
       - "8080:8080"
       - "3000:3000"
