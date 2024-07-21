@@ -1,8 +1,10 @@
 #!/bin/bash
 
 # Prompt user for GitHub username and email
-read -p "Enter your GitHub username: " GITHUB_USERNAME
-read -p "Enter your GitHub email: " GITHUB_EMAIL
+echo "Enter your GitHub username: "
+read GITHUB_USERNAME
+echo "Enter your GitHub email: "
+read GITHUB_EMAIL
 
 # Set your GitHub credentials
 git config --global user.name "$GITHUB_USERNAME"
