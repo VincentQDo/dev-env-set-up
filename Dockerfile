@@ -28,16 +28,10 @@ RUN apt-get update && \
     unzip \
     ripgrep \
     luarocks \
+    htop \
+    tree \
+    python3.12-venv \
     && apt-get clean
-
-# Copy the Nerd Font archive to the container
-COPY 0xProto.tar.xz /tmp/0xProto.tar.xz
-
-# Extract the Nerd Font and install it
-RUN mkdir -p /usr/local/share/fonts && \
-    tar -xJf /tmp/0xProto.tar.xz -C /usr/local/share/fonts && \
-    fc-cache -fv && \
-    rm /tmp/0xProto.tar.xz
 
 # Install oh-my-zsh for easier zsh configuration
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -49,6 +43,7 @@ RUN echo "set-option -g default-shell /usr/bin/zsh" >> /root/.tmux.conf && \
     echo "set-option -sa terminal-features ',xterm:RGB'" >> /root/.tmux.conf
 
 # Install Neovim KickStart
+ARG CACHEBUST=1
 RUN git clone https://github.com/VincentQDo/kickstart.nvim.git "${XDG_CONFIG_HOME:-$HOME/.config}"/nvim
 
 # Ensure locale is generated and set correctly
@@ -58,7 +53,7 @@ RUN apt-get install -y locales && \
 
 # Start neovim and let lazy vim install all plugins
 RUN nvim --headless +qall && \
-    nvim --headless +"MasonInstall prettier pyright typescript-language-server lua-language-server stylua" +qall
+    nvim --headless +"MasonInstall delve gopls js-debug-adapter lua-language-server prettier pyright stylua typescript-language-server sqlls sqlfluff sql-formatter pylint black ast-grep" +qall
 
 # Set the working directory
 WORKDIR /workspace

@@ -1,6 +1,6 @@
 services:
   dev:
-    image: vinceqdo/dev:latest
+    image: dev:latest
     container_name: dev
     build:
       context: .
