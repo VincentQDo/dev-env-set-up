@@ -16,8 +16,6 @@ RUN apt-get update && \
     build-essential \
     curl \
     wget \
-    python3 \
-    python3-pip \
     golang \
     rustc \
     cargo \
@@ -31,7 +29,9 @@ RUN apt-get update && \
     htop \
     tree \
     python3.12-venv \
-    && apt-get clean
+    python3 \
+    python3-pip \
+   && apt-get clean
 
 # Install oh-my-zsh for easier zsh configuration
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -51,9 +51,9 @@ RUN apt-get install -y locales && \
     locale-gen en_US.UTF-8 && \
     update-locale LANG=en_US.UTF-8
 
-# Start neovim and let lazy vim install all plugins
+# Start neovim and let lazy vim and mason install all plugins
 RUN nvim --headless +qall && \
-    nvim --headless +"MasonInstall delve gopls js-debug-adapter lua-language-server prettier pyright stylua typescript-language-server sqlls sqlfluff sql-formatter pylint black ast-grep" +qall
+    nvim --headless +"MasonInstall delve gopls js-debug-adapter lua-language-server prettier pyright stylua typescript-language-server sqlls sqlfluff sql-formatter pylint black ast-grep remark-language-server css-lsp tailwindcss-language-server stylelint" +qall
 
 # Set the working directory
 WORKDIR /workspace
