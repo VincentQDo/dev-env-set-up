@@ -1,4 +1,4 @@
-FROM ubuntu:25.04
+FROM ubuntu:noble
 
 # Set environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -50,11 +50,11 @@ RUN apt-get install -y locales && \
     update-locale LANG=en_US.UTF-8
 
 # Installing Neovim Stable from source
-RUN curl -L https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.tar.gz -o nvim-linux64.tar.gz && \
-    tar -xzf nvim-linux64.tar.gz -C /usr/local && \
-    ln -s /usr/local/nvim-linux64/bin/nvim /usr/local/bin/nvim && \
+RUN curl -L https://github.com/neovim/neovim/releases/download/stable/nvim-linux-x86_64.tar.gz -o nvim-linux64.tar.gz
+RUN ls && tar -xzf nvim-linux64.tar.gz -C /usr/local && \
+    ln -s /usr/local/nvim-linux-x86_64/bin/nvim /usr/local/bin/nvim && \
     rm nvim-linux64.tar.gz && \
-    ls -l /usr/local/bin/nvim && ls -l /usr/local/nvim-linux64/bin/nvim && \
+    ls -l /usr/local/bin/nvim && ls -l /usr/local/nvim-linux-x86_64/bin/nvim && \
     nvim --version
 
 ENV EDITOR=nvim
