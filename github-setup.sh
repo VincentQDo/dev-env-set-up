@@ -17,6 +17,6 @@ git remote set-url origin git@github.com:VincentQDo/kickstart.nvim.git
 # Verify the remote URL change
 echo "Updated remote URL for Neovim Kickstart repository:"
 git remote -v
-
+chmod 600 ~/.ssh/id_rsa
 echo "GitHub SSH setup completed."
 
